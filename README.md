@@ -55,3 +55,15 @@ When testing different port configurations, I observed the following:
    - WebSocket upgrade occurs properly from TCP connection
 
 Note: The server accepts TCP connections initially and upgrades them to WebSocket connections, while the client connects directly using the WebSocket protocol.
+
+## Client Identification
+![Add some information to client](image-3.png)
+
+Messages in the chat now display sender identification by showing the client's address and port. This enhancement was implemented through a simple modification in the server's broadcast functionality:
+
+```rust
+// Before: bcast_tx.send(text.into())?;
+// After: bcast_tx.send(format!("{}: {}", addr, text))?;
+```
+
+This change ensures each message is prefixed with the sender's address, making it easy to identify who sent which message in the conversation.
